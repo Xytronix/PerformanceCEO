@@ -1,4 +1,5 @@
 ﻿using AirportCEOModLoader;
+using AirportCEOModLoader.SaveLoadUtils;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Logging;
@@ -42,11 +43,10 @@ public class PerformanceCEO : BaseUnityPlugin
     
     private void Start()
     {
-        AirportCEOModLoader.WatermarkUtils.WatermarkUtils.Register(new AirportCEOModLoader.WatermarkUtils.WatermarkInfo("PCEO", "1.2.1", true));
-        AirportCEOModLoader.SaveLoadUtils.EventDispatcher.EndOfLoad += DLCCheckFix.NewCheckDLCOwnage;
+        AirportCEOModLoader.WatermarkUtils.WatermarkUtils.Register(new AirportCEOModLoader.WatermarkUtils.WatermarkInfo("PCEO", "1.2.2", true));
+        EventDispatcher.EndOfLoad += DLCCheckFix.NewCheckDLCOwnage;
+        CoroutineEventDispatcher.RegisterToLoadGamePhase(OtherTweaks.RoomAreaOptimization.ClearAreaCacheCoroutine, CoroutineEventDispatcher.CoroutineAttachmentType.Before);
         PerformanceTests.DoTests();
-
-        //gameObject.AddComponent<NewUpdateManager>();
 
         Logger.LogInfo("Finished Start");
     }
